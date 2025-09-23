@@ -22,6 +22,13 @@ jobs:
         python -m pip install --upgrade pip 
         pip install -r requirements.txt 
         pip install pytest
+
+    - name: Run flake8 Code Style Check
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+      env:
+        PYTHONPATH: ${{ github.workspace }}
     
     - name: Run Bandit SAST Scan 
       run: |
@@ -34,7 +41,7 @@ jobs:
         name: bandit-report
         path: bandit_results.json
         if-no-files-found: warn
-        
+
     - name: Check Bandit Results
       id: bandit-check
       run: |
