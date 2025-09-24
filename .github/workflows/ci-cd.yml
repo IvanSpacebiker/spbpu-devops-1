@@ -93,6 +93,7 @@ jobs:
 
       - name: Build Python package
         run: |
+          cd app
           python -m build
 
       - name: Upload built package as artifact
