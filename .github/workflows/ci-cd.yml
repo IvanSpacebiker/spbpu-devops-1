@@ -68,7 +68,7 @@ jobs:
     
     - name: Run Tests with pytest 
       run: |
-        python -m pytest tests/ -v 
+        python -m pytest app/tests/ -v 
   
   build:
     name: Build Package
