@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route('/') 
 def hello_world():
+    print("test")
     try: 
         user_id = int(request.args.get('id', 1)) 
     except ValueError: 
