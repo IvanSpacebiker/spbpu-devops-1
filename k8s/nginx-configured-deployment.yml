@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: nginx-configured-deployment 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels: 
+      app: nginx-configured 
+  template: 
+    metadata: 
+      labels: 
+        app: nginx-configured 
+    spec: 
+      containers: 
+      - name: nginx 
+        image: nginx:alpine 
+        ports: 
+        - containerPort: 80 
+        volumeMounts: 
+        - name: config-volume 
+          mountPath: /etc/nginx/conf.d 
+        - name: html-volume 
+          mountPath: /usr/share/nginx/html 
+        - name: secret-volume 
+          mountPath: /etc/secret 
+          readOnly: true 
+      volumes: 
+      - name: config-volume 
+        configMap: 
+          name: nginx-config 
+          items: 
+          - key: nginx.conf 
+            path: default.conf 
+      - name: html-volume 
+        configMap: 
+          name: nginx-config 
+          items: 
+          - key: index.html 
+            path: index.html 
+      - name: secret-volume 
+        secret: 
+          secretName: mysecret
